@@ -24,4 +24,4 @@ FlowerLogger employs a low-level Windows keyboard hook to capture keypresses glo
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/flowerlogger.git
+   git clone https://github.com/yourusername/FlowerKeyLogger.git
